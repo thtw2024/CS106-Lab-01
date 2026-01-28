@@ -10,7 +10,9 @@
  */
 int fitsShort(int x)
 {
-    return 2;
+    // return !(x >> 15) | !~(x >> 15);
+    // whenever upper 17 bits are the same, the int can fit in short
+    return !((x >> 15) ^ (x >> 16));
 }
 
 int test_fitsShort(int x)
@@ -21,7 +23,7 @@ int test_fitsShort(int x)
 
 int main(void)
 {
-    int x = 0;
+    int x = 32767;
     printf("expected: %x\n", fitsShort(x));
     printf("actual  : %x\n", test_fitsShort(x));
 }
